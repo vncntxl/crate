@@ -110,9 +110,56 @@ name and the feature name differ.
 ## Deployment
 
 This app is plain PHP and MySQL with no build step, so it runs on any
-standard PHP host that provides MySQL/MariaDB (shared hosting,
-InfinityFree, 000webhost, and similar). To deploy:
+standard PHP host that provides MySQL/MariaDB. It needs PHP 7.4 or
+newer and makes no outbound network requests at runtime.
 
-1. Upload all files to the host.
-2. Create a MySQL database on the host and import `seed/crate.sql`.
-3. Update `includes/config.php` with the host's database credentials.
+The steps below are written for InfinityFree, but the shape is the same
+on any shared host.
+
+1. **Create the hosting account.** Sign up at infinityfree.com, create a
+   site, and pick a free subdomain. Wait for the account to finish
+   activating before continuing.
+
+2. **Create the database.** In the control panel, open **MySQL
+   Databases** and create one. The panel then shows four values you need:
+   the database name, username, password, and the **MySQL hostname**
+   (something like `sql123.infinityfree.com`). Note all four.
+
+3. **Import the schema.** Open phpMyAdmin from the control panel, select
+   the new database, go to **Import**, choose `seed/crate.sql`, and run
+   it. The file creates the four tables and their seed data. It does not
+   contain a `CREATE DATABASE` statement, so it imports into whichever
+   database you have selected.
+
+4. **Point the app at that database.** Edit
+   [includes/config.php](includes/config.php) and replace the four
+   constants with the values from step 2:
+
+   ```php
+   define('DB_HOST', 'sql123.infinityfree.com');  // NOT localhost
+   define('DB_NAME', 'if0_00000000_crate');
+   define('DB_USER', 'if0_00000000');
+   define('DB_PASS', 'your-database-password');
+   ```
+
+   `DB_HOST` is the most common thing to get wrong. On shared hosting the
+   database usually lives on a separate server, so `localhost` will not
+   connect.
+
+5. **Upload the files.** Connect over FTP (FileZilla works) using the FTP
+   details from the control panel, and upload the project **into the
+   `htdocs/` folder**, not the account root. Files placed outside
+   `htdocs/` are not served.
+
+   Skip `.git/` and `report/` when uploading. Make sure
+   `assets/covers/` and its JPEGs come across, or every album will fall
+   back to a plain gradient.
+
+6. **Test the live site.** Visit the domain and check, in order: the home
+   page grid loads with cover art, search and a genre chip both filter,
+   registering a new account works, submitting a review works, and the
+   heart button adds to favourites. If the home page renders but stays
+   empty, the database credentials in step 4 are wrong.
+
+`seed/fetch_covers.php` is safe to upload. It refuses to run from a
+browser and only works from a command line.
