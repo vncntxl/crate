@@ -16,6 +16,8 @@ createApp({
             trackCount: null,
             durationMin: null,
             description: '',
+            coverUrl: '',
+            coverBroken: false,
             currentYear,
 
             errors: [],
@@ -62,6 +64,7 @@ createApp({
             body.set('track_count', this.trackCount ?? '');
             body.set('duration_min', this.durationMin ?? '');
             body.set('description', this.description);
+            body.set('cover_url', this.coverUrl);
 
             const response = await fetch('api/album_add.php', {
                 method: 'POST',
@@ -85,6 +88,8 @@ createApp({
             this.trackCount = null;
             this.durationMin = null;
             this.description = '';
+            this.coverUrl = '';
+            this.coverBroken = false;
             this.submitting = false;
         },
     },

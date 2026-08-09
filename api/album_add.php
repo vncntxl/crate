@@ -38,6 +38,7 @@ $producer = trim($_POST['producer'] ?? '');
 $trackCount = ($_POST['track_count'] ?? '') !== '' ? (int) $_POST['track_count'] : null;
 $durationMin = ($_POST['duration_min'] ?? '') !== '' ? (int) $_POST['duration_min'] : null;
 $description = trim($_POST['description'] ?? '');
+$coverUrl = trim($_POST['cover_url'] ?? '');
 
 // Server-side validation. Vue's admin form checks these same rules
 // before it even sends the request, but that check runs in the
@@ -55,6 +56,15 @@ if ($genre === '') {
 }
 if ($year < 1900 || $year > (int) date('Y')) {
     $errors[] = 'Enter a valid year.';
+}
+
+
+if ($coverUrl !== '') {
+    $scheme = strtolower((string) parse_url($coverUrl, PHP_URL_SCHEME));
+
+    if (!filter_var($coverUrl, FILTER_VALIDATE_URL) || !in_array($scheme, ['http', 'https'], true)) {
+        $errors[] = 'Cover image URL must start with http:// or https://';
+    }
 }
 
 if (!empty($errors)) {
@@ -77,8 +87,8 @@ $colors = $palette[array_rand($palette)];
 
 try {
     $stmt = db()->prepare(
-        'INSERT INTO albums (title, artist, year, genre, label, producer, track_count, duration_min, description, cover_color_1, cover_color_2)
-         VALUES (:title, :artist, :year, :genre, :label, :producer, :track_count, :duration_min, :description, :c1, :c2)'
+        'INSERT INTO albums (title, artist, year, genre, label, producer, track_count, duration_min, description, cover_url, cover_color_1, cover_color_2)
+         VALUES (:title, :artist, :year, :genre, :label, :producer, :track_count, :duration_min, :description, :cover_url, :c1, :c2)'
     );
     $stmt->execute([
         'title'        => $title,
@@ -90,6 +100,9 @@ try {
         'track_count'  => $trackCount,
         'duration_min' => $durationMin,
         'description'  => $description !== '' ? $description : null,
+        // Null rather than an empty string, so the v-if on the front end
+        // falls through to the gradient when no cover was supplied.
+        'cover_url'    => $coverUrl !== '' ? $coverUrl : null,
         'c1'           => $colors[0],
         'c2'           => $colors[1],
     ]);

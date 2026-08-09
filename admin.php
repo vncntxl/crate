@@ -58,6 +58,17 @@ require_once __DIR__ . '/includes/header.php';
         </label>
 
         <label>
+            Cover image URL (optional)
+            <input type="url" v-model="coverUrl" placeholder="https://example.com/cover.jpg">
+        </label>
+
+        <!-- Live preview, so a mistyped URL is obvious before saving -->
+        <div v-if="coverUrl" class="cover-preview">
+            <img :src="coverUrl" alt="Cover preview" @error="coverBroken = true" @load="coverBroken = false">
+            <span v-if="coverBroken" class="form-errors-inline">That image could not be loaded.</span>
+        </div>
+
+        <label>
             Description
             <textarea v-model="description" rows="4"></textarea>
         </label>

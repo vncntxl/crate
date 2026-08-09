@@ -1,5 +1,5 @@
 -- Crate database export
--- Generated 2026-08-10 00:32:15
+-- Generated 2026-08-10 01:06:35
 
 SET FOREIGN_KEY_CHECKS=0;
 SET NAMES utf8mb4;
@@ -44,7 +44,7 @@ CREATE TABLE `albums` (
   `cover_color_2` varchar(20) DEFAULT '#8f7bf5',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `albums` (`id`, `title`, `artist`, `year`, `genre`, `label`, `producer`, `track_count`, `duration_min`, `description`, `cover_url`, `cover_color_1`, `cover_color_2`, `created_at`) VALUES
 ('1','Mingus Ah Um','Charles Mingus','1959','Jazz','Originally Released 1959, 1979, 1993 Sony Music Entertainment Inc.',NULL,'12','73','Charles Mingus released Mingus Ah Um in 1959. 12 tracks across about 73 minutes of jazz.','assets/covers/1.jpg','#ff6b6b','#ff9f7f','2026-08-10 08:25:43'),

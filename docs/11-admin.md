@@ -43,20 +43,43 @@ general principle.
 ## Cover art for admin-added albums
 
 The seeded albums have real cover images, downloaded once by
-`seed/fetch_covers.php` (see [12-styling.md](12-styling.md)). An album
-added through this admin form has no artwork, so its `cover_url` stays
-null and the `<img>` on the card is skipped by its `v-if`.
+`seed/import_albums.php` (see [12-styling.md](12-styling.md)). The admin
+form has an optional **Cover image URL** field so a newly added album can
+have artwork too, with a live preview next to the field that catches a
+mistyped address before saving.
 
-To make sure a new album still looks like something rather than an empty
-square, `api/album_add.php` assigns it a random gradient from a small
-fixed palette:
+Leave it blank and `cover_url` stays null, the `<img>` is skipped by its
+`v-if`, and `api/album_add.php` falls back to a random gradient from a
+small fixed palette:
 
 ```php
 $palette = [['#ff6b6b', '#ff9f7f'], ['#4d7dff', '#7fb2ff'], ...];
 $colors = $palette[array_rand($palette)];
 ```
 
-Handling real image uploads would mean file validation, storage limits
-and a whole class of security problems (someone uploading a PHP script
-disguised as a `.jpg`), which is well outside what this assignment
-needs. The gradient is the deliberate trade-off.
+### Why the URL is validated on the server
+
+The value ends up inside `<img :src="album.cover_url">` on the front end.
+An attribute binding will happily accept a `javascript:` URL, so without
+a check an admin could store one and turn saved data into running code.
+`api/album_add.php` therefore accepts only real `http` and `https`
+addresses:
+
+```php
+$scheme = strtolower((string) parse_url($coverUrl, PHP_URL_SCHEME));
+
+if (!filter_var($coverUrl, FILTER_VALIDATE_URL) || !in_array($scheme, ['http', 'https'], true)) {
+    $errors[] = 'Cover image URL must start with http:// or https://';
+}
+```
+
+The browser's own `type="url"` input does a similar check, but as always
+that only protects a cooperative visitor. The server check is the one
+that counts.
+
+### Why not file uploads
+
+Accepting uploaded image files would mean validating file types, imposing
+storage limits, and defending against someone uploading a PHP script
+renamed to `.jpg` and then requesting it. Taking a URL sidesteps that
+entire class of problem, which is the right trade-off at this scale.
