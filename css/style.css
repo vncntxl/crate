@@ -168,3 +168,84 @@ main {
     font-size: 0.85rem;
     opacity: 0.85;
 }
+
+/* Star rating component */
+.star-rating {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 1.1rem;
+    color: #3a3a4a;
+}
+
+.star-rating .filled {
+    color: #ffcc4d;
+}
+
+/* Album detail page */
+.album-detail {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+}
+
+.album-hero {
+    width: 260px;
+    height: 260px;
+    border-radius: 12px;
+}
+
+.album-info .artist {
+    color: #9d9db0;
+    margin-top: 0.25rem;
+}
+
+.rating-line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.75rem 0;
+    color: #cfcfe0;
+}
+
+.album-info .description {
+    line-height: 1.5;
+    margin: 1rem 0;
+}
+
+.meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 1rem;
+}
+
+.meta dt {
+    color: #9d9db0;
+}
+
+.meta dd {
+    margin: 0;
+}
+
+.reviews {
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+    border-top: 1px solid #2a2a38;
+    padding-top: 1.5rem;
+}
+
+.review {
+    padding: 1rem 0;
+    border-bottom: 1px solid #22222f;
+}
+
+.review-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+}
+
+.review-text {
+    color: #cfcfe0;
+    margin: 0;
+}
