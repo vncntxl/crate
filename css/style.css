@@ -346,6 +346,63 @@ main {
     max-width: 360px;
 }
 
+.form-success-inline {
+    color: #7fe0a8;
+    margin: 0.25rem 0;
+}
+
+/* Account page */
+.account-section {
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #2a2a38;
+}
+
+.my-review {
+    padding: 1rem 0;
+    border-bottom: 1px solid #22222f;
+}
+
+.my-review-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.my-review-head a {
+    color: #f0f0f5;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.my-review-head .artist {
+    color: #9d9db0;
+    font-size: 0.9rem;
+}
+
+.my-review-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.my-review-actions button {
+    background: none;
+    border: 1px solid #2a2a38;
+    color: #cfcfe0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.my-review-actions button:hover {
+    border-color: #6d5df0;
+    color: #fff;
+}
+
 .form-errors-inline {
     color: #ff9db0;
     margin: 0.25rem 0;
