@@ -9,7 +9,9 @@
 require_once __DIR__ . '/includes/auth.php';
 
 // Already logged in? No reason to see the register form again.
-if (is_logged_in()) {
+// current_user() (not just is_logged_in()) so a stale session left over
+// from a deleted account gets cleaned up before we decide to redirect.
+if (current_user()) {
     header('Location: index.php');
     exit;
 }

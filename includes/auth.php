@@ -35,6 +35,13 @@ function current_user(): ?array
         $stmt = db()->prepare('SELECT id, name, email, is_admin FROM users WHERE id = :id');
         $stmt->execute(['id' => $_SESSION['user_id']]);
         $cachedUser = $stmt->fetch() ?: false;
+
+        // If the session points at a user_id that no longer exists (their
+        // account was deleted elsewhere), treat this as "not logged in"
+        // instead of leaving a broken half-logged-in session behind.
+        if ($cachedUser === false) {
+            unset($_SESSION['user_id']);
+        }
     }
 
     return $cachedUser ?: null;
