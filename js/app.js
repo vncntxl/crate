@@ -18,6 +18,7 @@ createApp({
             genres: [],       // genre names for the filter chips
             searchTerm: '',   // whatever the user has typed in the search box
             activeGenre: '',  // the currently selected genre chip ('' = none)
+            showingAll: false, // true when the whole catalogue is on screen
             loading: true,    // true while a fetch() is in flight
             favouriteIds: [], // album ids the logged-in user has hearted
         };
@@ -49,6 +50,7 @@ createApp({
         onSearchInput() {
             if (this.searchTerm.trim() !== '') {
                 this.activeGenre = '';
+                this.showingAll = false;
             }
             this.loadAlbums();
         },
@@ -65,6 +67,8 @@ createApp({
                 params.set('q', this.searchTerm.trim());
             } else if (this.activeGenre !== '') {
                 params.set('genre', this.activeGenre);
+            } else if (this.showingAll) {
+                params.set('all', '1');
             }
 
             const response = await fetch('api/albums.php?' + params.toString());
@@ -84,6 +88,25 @@ createApp({
         // (see the elseif in api/albums.php).
         filterByGenre(genre) {
             this.activeGenre = genre;
+            this.searchTerm = '';
+            this.showingAll = false;
+            this.loadAlbums();
+        },
+
+        // "All albums" - the full catalogue, alphabetical. The home page
+        // otherwise only ever shows 8 random albums, which leaves no way
+        // to browse everything without guessing at genres.
+        showAllAlbums() {
+            this.showingAll = true;
+            this.activeGenre = '';
+            this.searchTerm = '';
+            this.loadAlbums();
+        },
+
+        // "Shuffle" - back to the default view of 8 random albums.
+        showRandom() {
+            this.showingAll = false;
+            this.activeGenre = '';
             this.searchTerm = '';
             this.loadAlbums();
         },

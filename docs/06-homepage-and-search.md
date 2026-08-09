@@ -4,22 +4,29 @@
 
 ## `api/albums.php`: the data source
 
-One endpoint, three modes, decided by which query parameters are present:
+One endpoint, four modes, decided by which query parameters are present:
 
 ```php
 if ($q !== '') {
     // ?q=... -> search title OR artist with LIKE '%...%'
 } elseif ($genre !== '') {
     // ?genre=... -> exact match on genre
+} elseif ($all) {
+    // ?all -> the whole catalogue, alphabetically
 } else {
     // no params -> 8 random albums, ORDER BY RAND() LIMIT 8
 }
 ```
 
-Search and genre-filter are **mutually exclusive** here. If `q` is
-present, genre is ignored entirely. That single `elseif` is the whole
-rule, and it's mirrored on the front end (below) so the UI never shows a
-state that contradicts what the server would actually do.
+The four modes are **mutually exclusive**. If `q` is present, everything
+else is ignored. That `if`/`elseif` chain is the whole rule, and it's
+mirrored on the front end (below) so the UI never shows a state that
+contradicts what the server would actually do.
+
+The default (no parameters) deliberately returns only 8 albums, chosen at
+random, because the assessment brief asks for a home page of random
+products. `?all` exists so there's still a way to browse the entire
+catalogue, which the random 8 alone doesn't allow.
 
 ## `index.php`: the shell
 
@@ -49,6 +56,10 @@ the HTML before Vue even starts running.
   originally stayed highlighted after typing.
 - `filterByGenre(genre)` does the reverse: clicking a chip clears
   `searchTerm`.
+- `showAllAlbums()` and `showRandom()` back the "All albums" and
+  "Shuffle" chips. Each one clears the other two filters, so exactly one
+  view is ever active and the highlighted chip always matches what the
+  server was actually asked for.
 - `mounted()` checks `window.location.search` for `?genre=Rock`. This is
   how clicking a genre in the nav dropdown, which is a plain
   server-rendered `<a href="index.php?genre=Rock">` rather than a Vue

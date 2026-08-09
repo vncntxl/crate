@@ -21,6 +21,12 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="genre-chips">
             <button
+                type="button"
+                :class="{ active: showingAll }"
+                @click="showAllAlbums"
+            >All albums</button>
+
+            <button
                 v-for="genre in genres"
                 :key="genre"
                 type="button"
@@ -28,8 +34,8 @@ require_once __DIR__ . '/includes/header.php';
                 @click="filterByGenre(genre)"
             >{{ genre }}</button>
 
-            <button v-if="activeGenre" type="button" @click="filterByGenre('')">
-                Clear filter
+            <button v-if="activeGenre || showingAll" type="button" @click="showRandom">
+                Shuffle
             </button>
         </div>
     </div>
@@ -82,6 +88,6 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="js/app.js"></script>
+<script src="<?= asset('js/app.js') ?>"></script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
