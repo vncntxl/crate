@@ -337,6 +337,21 @@ main {
     background: #7f6ff5;
 }
 
+.auth-form textarea {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #2a2a38;
+    background: #1b1b26;
+    color: #f0f0f5;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.album-form {
+    max-width: 480px;
+}
+
 .form-errors {
     background: #3a1f28;
     border: 1px solid #6b2f3f;
