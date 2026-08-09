@@ -1,0 +1,99 @@
+/* Crate - base styles
+   This is a minimal starting stylesheet so pages are readable while we
+   build features. We'll do a full dark, music-app styling pass at the end. */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #12121a;
+    color: #f0f0f5;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: #1b1b26;
+    border-bottom: 1px solid #2a2a38;
+}
+
+.site-nav .brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.site-nav nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.site-nav a {
+    color: #cfcfe0;
+    text-decoration: none;
+}
+
+.site-nav a:hover {
+    color: #fff;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    color: #cfcfe0;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    background: #22222f;
+    border: 1px solid #2a2a38;
+    border-radius: 6px;
+    min-width: 160px;
+    padding: 0.5rem 0;
+    z-index: 10;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.4rem 1rem;
+    background: none;
+    border: none;
+    color: #cfcfe0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+    background: #2a2a38;
+}
+
+main {
+    padding: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
