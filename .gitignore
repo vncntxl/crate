@@ -3,3 +3,6 @@
 Thumbs.db
 .vscode/
 .idea/
+
+# Written report - contains student ID and name, kept out of the public repo
+report/
