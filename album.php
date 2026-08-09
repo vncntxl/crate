@@ -55,6 +55,30 @@ require_once __DIR__ . '/includes/header.php';
             </dl>
         </div>
 
+        <section class="write-review">
+            <h2>{{ myReviewId ? 'Edit your review' : 'Write a review' }}</h2>
+
+            <?php if ($loggedInUser): ?>
+                <form @submit.prevent="submitReview" class="review-form">
+                    <star-picker v-model="myRating"></star-picker>
+
+                    <textarea
+                        v-model="myReviewText"
+                        placeholder="What did you think? (optional)"
+                        rows="3"
+                    ></textarea>
+
+                    <p v-if="reviewError" class="form-errors-inline">{{ reviewError }}</p>
+
+                    <button type="submit" :disabled="myRating === 0 || submitting">
+                        {{ submitting ? 'Saving...' : (myReviewId ? 'Update review' : 'Submit review') }}
+                    </button>
+                </form>
+            <?php else: ?>
+                <p><a href="login.php">Log in</a> to write a review.</p>
+            <?php endif; ?>
+        </section>
+
         <section class="reviews">
             <h2>Reviews</h2>
 

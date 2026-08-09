@@ -297,3 +297,69 @@ main {
     border-radius: 6px;
     max-width: 360px;
 }
+
+.form-errors-inline {
+    color: #ff9db0;
+    margin: 0.25rem 0;
+}
+
+/* Interactive star picker (write-a-review form) */
+.star-picker {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.star-picker button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #3a3a4a;
+    padding: 0;
+    line-height: 1;
+}
+
+.star-picker button.filled {
+    color: #ffcc4d;
+}
+
+.write-review {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #2a2a38;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 480px;
+}
+
+.review-form textarea {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #2a2a38;
+    background: #1b1b26;
+    color: #f0f0f5;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.review-form button {
+    align-self: flex-start;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    border: none;
+    background: #6d5df0;
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.review-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

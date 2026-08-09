@@ -3,6 +3,7 @@
 // Given ?id=, returns that album's details, its reviews (newest first,
 // with the reviewer's name joined in), and the average rating.
 
+require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -48,11 +49,24 @@ try {
     $statsStmt->execute(['id' => $id]);
     $stats = $statsStmt->fetch();
 
+    // If someone is logged in, also tell the front end whether they've
+    // already reviewed this album (and what they said), so album.php can
+    // show "edit your review" instead of a second, duplicate review form.
+    $myReview = null;
+    if (is_logged_in()) {
+        $myReviewStmt = db()->prepare(
+            'SELECT id, rating, review_text FROM reviews WHERE album_id = :album_id AND user_id = :user_id'
+        );
+        $myReviewStmt->execute(['album_id' => $id, 'user_id' => $_SESSION['user_id']]);
+        $myReview = $myReviewStmt->fetch() ?: null;
+    }
+
     echo json_encode([
         'album'          => $album,
         'reviews'        => $reviews,
         'average_rating' => $stats['average_rating'] !== null ? round((float) $stats['average_rating'], 1) : null,
         'review_count'   => (int) $stats['review_count'],
+        'my_review'      => $myReview,
     ]);
 
 } catch (PDOException $err) {
