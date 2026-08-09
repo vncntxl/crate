@@ -25,7 +25,7 @@ require_once __DIR__ . '/includes/header.php';
 -->
 <div id="app" data-album-id="<?= $albumId ?>">
     <p v-if="loading">Loading album...</p>
-    <p v-else-if="!album">Album not found.</p>
+    <p v-else-if="!album" class="empty-state">Album not found.</p>
 
     <div v-else class="album-detail">
         <div
@@ -94,7 +94,7 @@ require_once __DIR__ . '/includes/header.php';
         <section class="reviews">
             <h2>Reviews</h2>
 
-            <p v-if="reviews.length === 0">No one has reviewed this album yet.</p>
+            <p v-if="reviews.length === 0" class="empty-state">No one has reviewed this album yet.</p>
 
             <div v-for="review in reviews" :key="review.id" class="review">
                 <div class="review-head">

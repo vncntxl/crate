@@ -1,30 +1,99 @@
-/* Crate - base styles
-   This is a minimal starting stylesheet so pages are readable while we
-   build features. We'll do a full dark, music-app styling pass at the end. */
+/* Crate - styles
+   CSS custom properties (the --variable-name values below) let us define
+   the whole colour palette once, at the top, and reuse it everywhere with
+   var(--name) - change a colour here and it updates across the entire
+   site instead of hunting through every rule. */
+
+:root {
+    --bg: #101018;
+    --bg-raised: #1b1b26;
+    --bg-input: #181822;
+    --border: #2a2a38;
+    --border-light: #33334420;
+    --text: #f0f0f5;
+    --text-muted: #9d9db0;
+    --text-dim: #6f6f82;
+    --accent: #6d5df0;
+    --accent-hover: #7f6ff5;
+    --accent-soft: #6d5df022;
+    --star: #ffcc4d;
+    --heart: #ff5d7a;
+    --danger-bg: #3a1f28;
+    --danger-border: #6b2f3f;
+    --danger-text: #ffb4c2;
+    --success-text: #7fe0a8;
+    --radius: 8px;
+    --radius-lg: 12px;
+}
 
 * {
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: #12121a;
-    color: #f0f0f5;
+html {
+    scroll-behavior: smooth;
 }
 
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.4;
+}
+
+h1 {
+    font-size: 1.75rem;
+    margin: 0 0 1.25rem;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
+}
+
+a {
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* Focus states - visible for keyboard users, invisible for mouse users.
+   Accessibility matters even in a small student project: someone
+   navigating with Tab instead of a mouse still needs to see where they
+   are on the page. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Nav */
 .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     padding: 1rem 1.5rem;
-    background: #1b1b26;
-    border-bottom: 1px solid #2a2a38;
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
 }
 
 .site-nav .brand {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.25rem;
+    letter-spacing: 0.02em;
     color: #fff;
     text-decoration: none;
 }
@@ -32,16 +101,24 @@ body {
 .site-nav nav {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 1.25rem;
 }
 
 .site-nav a {
-    color: #cfcfe0;
+    color: var(--text-muted);
     text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.15s ease;
 }
 
 .site-nav a:hover {
     color: #fff;
+}
+
+.nav-user {
+    color: var(--text-dim);
+    font-size: 0.9rem;
 }
 
 .dropdown {
@@ -51,10 +128,16 @@ body {
 .dropdown-toggle {
     background: none;
     border: none;
-    color: #cfcfe0;
+    color: var(--text-muted);
     font: inherit;
+    font-size: 0.95rem;
     cursor: pointer;
     padding: 0;
+    transition: color 0.15s ease;
+}
+
+.dropdown:hover .dropdown-toggle {
+    color: #fff;
 }
 
 .dropdown-menu {
@@ -63,14 +146,16 @@ body {
     top: 1.5rem;
     left: 0;
     background: #22222f;
-    border: 1px solid #2a2a38;
-    border-radius: 6px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     min-width: 160px;
     padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     z-index: 10;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
     display: block;
 }
 
@@ -82,20 +167,31 @@ body {
     padding: 0.4rem 1rem;
     background: none;
     border: none;
-    color: #cfcfe0;
+    color: var(--text-muted);
     font: inherit;
     cursor: pointer;
 }
 
 .dropdown-menu a:hover,
 .dropdown-menu button:hover {
-    background: #2a2a38;
+    background: var(--border);
+    color: #fff;
 }
 
 main {
-    padding: 1.5rem;
+    flex: 1;
+    padding: 2rem 1.5rem;
     max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
+}
+
+.site-footer {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
 }
 
 /* Home page */
@@ -103,16 +199,21 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .controls input[type="text"] {
-    padding: 0.6rem 0.9rem;
-    border-radius: 6px;
-    border: 1px solid #2a2a38;
-    background: #1b1b26;
-    color: #f0f0f5;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text);
     font-size: 1rem;
+    transition: border-color 0.15s ease;
+}
+
+.controls input[type="text"]:focus-visible {
+    border-color: var(--accent);
 }
 
 .genre-chips {
@@ -124,16 +225,22 @@ main {
 .genre-chips button {
     padding: 0.35rem 0.9rem;
     border-radius: 999px;
-    border: 1px solid #2a2a38;
-    background: #1b1b26;
-    color: #cfcfe0;
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text-muted);
     cursor: pointer;
     font-size: 0.9rem;
+    transition: all 0.15s ease;
+}
+
+.genre-chips button:hover {
+    border-color: var(--accent);
+    color: #fff;
 }
 
 .genre-chips button.active {
-    background: #6d5df0;
-    border-color: #6d5df0;
+    background: var(--accent);
+    border-color: var(--accent);
     color: #fff;
 }
 
@@ -144,12 +251,18 @@ main {
 }
 
 .album-card {
+    position: relative;
     display: block;
     aspect-ratio: 1;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     text-decoration: none;
-    position: relative;
     overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.album-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
 .album-card-info {
@@ -158,19 +271,19 @@ main {
     right: 0;
     bottom: 0;
     padding: 0.75rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     display: flex;
     flex-direction: column;
     color: #fff;
 }
 
+.album-card-info strong {
+    font-size: 0.95rem;
+}
+
 .album-card-info span {
     font-size: 0.85rem;
     opacity: 0.85;
-}
-
-.album-card {
-    position: relative;
 }
 
 .heart-btn {
@@ -189,15 +302,26 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.1s ease, color 0.15s ease;
+}
+
+.heart-btn:hover {
+    transform: scale(1.1);
 }
 
 .heart-btn.favourited {
-    color: #ff5d7a;
+    color: var(--heart);
 }
 
+.empty-state {
+    color: var(--text-muted);
+}
+
+/* Album detail page */
 .detail-title-row {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
@@ -207,29 +331,33 @@ main {
     height: auto;
     border-radius: 999px;
     padding: 0.35rem 0.9rem;
-    background: #1b1b26;
-    border: 1px solid #2a2a38;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
     font-size: 0.9rem;
     gap: 0.4rem;
+    transition: border-color 0.15s ease;
+}
+
+.detail-heart:hover {
+    transform: none;
 }
 
 .detail-heart.favourited {
-    border-color: #ff5d7a;
+    border-color: var(--heart);
 }
 
-/* Star rating component */
+/* Star rating component (read-only display) */
 .star-rating {
     display: inline-flex;
     gap: 2px;
     font-size: 1.1rem;
-    color: #3a3a4a;
+    color: var(--border);
 }
 
 .star-rating .filled {
-    color: #ffcc4d;
+    color: var(--star);
 }
 
-/* Album detail page */
 .album-detail {
     display: grid;
     grid-template-columns: 260px 1fr;
@@ -239,11 +367,11 @@ main {
 .album-hero {
     width: 260px;
     height: 260px;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
 }
 
 .album-info .artist {
-    color: #9d9db0;
+    color: var(--text-muted);
     margin-top: 0.25rem;
 }
 
@@ -251,23 +379,24 @@ main {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    margin: 0.75rem 0;
-    color: #cfcfe0;
+    margin: 0.9rem 0;
+    color: var(--text-muted);
 }
 
 .album-info .description {
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 1rem 0;
 }
 
 .meta {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.35rem 1rem;
+    gap: 0.4rem 1rem;
+    font-size: 0.95rem;
 }
 
 .meta dt {
-    color: #9d9db0;
+    color: var(--text-muted);
 }
 
 .meta dd {
@@ -277,28 +406,29 @@ main {
 .reviews {
     grid-column: 1 / -1;
     margin-top: 1.5rem;
-    border-top: 1px solid #2a2a38;
+    border-top: 1px solid var(--border);
     padding-top: 1.5rem;
 }
 
 .review {
     padding: 1rem 0;
-    border-bottom: 1px solid #22222f;
+    border-bottom: 1px solid var(--bg-raised);
 }
 
 .review-head {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.75rem;
     margin-bottom: 0.35rem;
 }
 
 .review-text {
-    color: #cfcfe0;
+    color: var(--text-muted);
     margin: 0;
 }
 
-/* Auth forms (register / login / account) */
+/* Forms shared by register / login / account / admin */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -311,41 +441,48 @@ main {
     flex-direction: column;
     gap: 0.35rem;
     font-size: 0.9rem;
-    color: #cfcfe0;
+    color: var(--text-muted);
 }
 
-.auth-form input {
+.auth-form input,
+.auth-form textarea {
     padding: 0.6rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid #2a2a38;
-    background: #1b1b26;
-    color: #f0f0f5;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text);
+    font-family: inherit;
     font-size: 1rem;
-}
-
-.auth-form button {
-    padding: 0.6rem;
-    border-radius: 6px;
-    border: none;
-    background: #6d5df0;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.auth-form button:hover {
-    background: #7f6ff5;
+    transition: border-color 0.15s ease;
 }
 
 .auth-form textarea {
-    padding: 0.6rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid #2a2a38;
-    background: #1b1b26;
-    color: #f0f0f5;
-    font-family: inherit;
-    font-size: 1rem;
     resize: vertical;
+}
+
+.auth-form input:focus-visible,
+.auth-form textarea:focus-visible {
+    border-color: var(--accent);
+}
+
+.auth-form button {
+    padding: 0.65rem;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.auth-form button:hover {
+    background: var(--accent-hover);
+}
+
+.auth-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .album-form {
@@ -353,16 +490,21 @@ main {
 }
 
 .form-errors {
-    background: #3a1f28;
-    border: 1px solid #6b2f3f;
-    color: #ffb4c2;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: var(--danger-text);
     padding: 0.75rem 1.25rem;
-    border-radius: 6px;
+    border-radius: var(--radius);
     max-width: 360px;
 }
 
+.form-errors-inline {
+    color: var(--danger-text);
+    margin: 0.25rem 0;
+}
+
 .form-success-inline {
-    color: #7fe0a8;
+    color: var(--success-text);
     margin: 0.25rem 0;
 }
 
@@ -371,12 +513,16 @@ main {
     max-width: 480px;
     margin-bottom: 2.5rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #2a2a38;
+    border-bottom: 1px solid var(--border);
+}
+
+.account-section:last-child {
+    border-bottom: none;
 }
 
 .my-review {
     padding: 1rem 0;
-    border-bottom: 1px solid #22222f;
+    border-bottom: 1px solid var(--bg-raised);
 }
 
 .my-review-head {
@@ -387,13 +533,17 @@ main {
 }
 
 .my-review-head a {
-    color: #f0f0f5;
+    color: var(--text);
     font-weight: 600;
     text-decoration: none;
 }
 
+.my-review-head a:hover {
+    color: var(--accent-hover);
+}
+
 .my-review-head .artist {
-    color: #9d9db0;
+    color: var(--text-muted);
     font-size: 0.9rem;
 }
 
@@ -405,22 +555,18 @@ main {
 
 .my-review-actions button {
     background: none;
-    border: 1px solid #2a2a38;
-    color: #cfcfe0;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
     padding: 0.3rem 0.8rem;
-    border-radius: 6px;
+    border-radius: var(--radius);
     cursor: pointer;
     font-size: 0.85rem;
+    transition: all 0.15s ease;
 }
 
 .my-review-actions button:hover {
-    border-color: #6d5df0;
+    border-color: var(--accent);
     color: #fff;
-}
-
-.form-errors-inline {
-    color: #ff9db0;
-    margin: 0.25rem 0;
 }
 
 /* Interactive star picker (write-a-review form) */
@@ -434,20 +580,25 @@ main {
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
-    color: #3a3a4a;
+    color: var(--border);
     padding: 0;
     line-height: 1;
+    transition: color 0.1s ease, transform 0.1s ease;
+}
+
+.star-picker button:hover {
+    transform: scale(1.15);
 }
 
 .star-picker button.filled {
-    color: #ffcc4d;
+    color: var(--star);
 }
 
 .write-review {
     grid-column: 1 / -1;
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #2a2a38;
+    border-top: 1px solid var(--border);
 }
 
 .review-form {
@@ -459,10 +610,10 @@ main {
 
 .review-form textarea {
     padding: 0.6rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid #2a2a38;
-    background: #1b1b26;
-    color: #f0f0f5;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text);
     font-family: inherit;
     font-size: 1rem;
     resize: vertical;
@@ -471,15 +622,42 @@ main {
 .review-form button {
     align-self: flex-start;
     padding: 0.5rem 1.25rem;
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: none;
-    background: #6d5df0;
+    background: var(--accent);
     color: #fff;
     font-size: 0.95rem;
     cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.review-form button:hover {
+    background: var(--accent-hover);
 }
 
 .review-form button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Small screens: stack the two-column album detail layout, and give the
+   nav a bit more breathing room since it wraps onto more lines. */
+@media (max-width: 700px) {
+    .album-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .album-hero {
+        width: 100%;
+        height: 200px;
+    }
+
+    .site-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    main {
+        padding: 1.5rem 1rem;
+    }
 }

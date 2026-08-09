@@ -15,7 +15,7 @@ require_once __DIR__ . '/includes/header.php';
     <h1>Your Favourites</h1>
 
     <p v-if="loading">Loading...</p>
-    <p v-else-if="albums.length === 0">
+    <p v-else-if="albums.length === 0" class="empty-state">
         You haven't favourited any albums yet. <a href="index.php">Browse albums</a>.
     </p>
 

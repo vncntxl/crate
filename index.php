@@ -35,7 +35,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 
     <p v-if="loading">Loading albums...</p>
-    <p v-else-if="albums.length === 0">No albums found.</p>
+    <p v-else-if="albums.length === 0" class="empty-state">No albums found.</p>
 
     <div v-else class="album-grid">
         <a

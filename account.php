@@ -75,7 +75,7 @@ require_once __DIR__ . '/includes/header.php';
         <h2>Your reviews</h2>
 
         <p v-if="loadingReviews">Loading...</p>
-        <p v-else-if="reviews.length === 0">You haven't written any reviews yet.</p>
+        <p v-else-if="reviews.length === 0" class="empty-state">You haven't written any reviews yet.</p>
 
         <div v-for="review in reviews" :key="review.id" class="my-review">
             <!-- Normal display mode -->
