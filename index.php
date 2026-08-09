@@ -46,6 +46,19 @@ require_once __DIR__ . '/includes/header.php';
             :style="{ background: 'linear-gradient(135deg, ' + album.cover_color_1 + ', ' + album.cover_color_2 + ')' }"
         >
             <!--
+                Real cover art when we have it. The gradient set on the
+                card above stays as the fallback, so an album added
+                through the admin form (which has no artwork) still shows
+                something rather than an empty square.
+            -->
+            <img
+                v-if="album.cover_url"
+                :src="album.cover_url"
+                :alt="album.title + ' album cover'"
+                class="album-card-art"
+            >
+
+            <!--
                 PHP already knows on the server whether you're logged in,
                 so it writes the literal word "true" or "false" straight
                 into this v-if - Vue doesn't need to work that out itself.

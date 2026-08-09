@@ -71,7 +71,8 @@ crate/
     style.css                                            <- the whole site's styling
   seed/
     crate.sql                                            <- full schema + seed data export
-  assets/covers/    <- unused, see docs/12-styling.md for why
+    fetch_covers.php                                     <- one-off setup script, never run by the site
+  assets/covers/    <- album artwork downloaded by fetch_covers.php
 ```
 
 Every page follows the same three-line skeleton:

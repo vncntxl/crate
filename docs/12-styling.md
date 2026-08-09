@@ -1,13 +1,34 @@
-# Styling
+# Styling and Cover Art
 
-**File:** `css/style.css` (one stylesheet, shared by every page)
+**Files:** `css/style.css` (one stylesheet, shared by every page), `seed/fetch_covers.php`
 
-## Why album covers are gradients, not images
+## Where the cover art comes from
 
-The `albums` table has `cover_color_1` and `cover_color_2` columns (hex
-colours like `#ff6b6b`), not a `cover_url`. Every place an album is
-shown, the grid and the detail page, renders those two colours as a CSS
-gradient instead of an `<img>`:
+Every album has a real cover image, stored as an ordinary JPEG in
+`assets/covers/`, with its path saved in the `albums.cover_url` column.
+Those files were downloaded once by `seed/fetch_covers.php`, a setup
+script that is never run by the live website.
+
+That script asks Apple's free iTunes Search API for each album (no
+account or API key needed), and uses the response to fill in the title,
+artist, release year, track count and artwork. Two details in it are
+worth being able to explain:
+
+- **It picks the result by exact match, not the first hit.** Searching
+  "Taylor Swift 1989" returns the *Taylor's Version* deluxe edition
+  first, and "Tame Impala Currents" returns a remix EP. The script
+  fetches 20 results and keeps only the one whose normalised title *and*
+  artist both match what was asked for, or reports a skip.
+- **It downloads the artwork rather than hotlinking it.** The API gives
+  back a URL to a 100x100 thumbnail; swapping the size in that URL asks
+  Apple's image server for a 600x600 version. The script saves that file
+  locally, so the running site serves its own images and doesn't depend
+  on Apple being reachable when a marker opens the page.
+
+## The gradient fallback
+
+Each album also keeps `cover_color_1` and `cover_color_2` (hex colours
+like `#ff6b6b`). Those render as a CSS gradient underneath the artwork:
 
 ```html
 :style="{ background: 'linear-gradient(135deg, ' + album.cover_color_1 + ', ' + album.cover_color_2 + ')' }"
@@ -15,13 +36,13 @@ gradient instead of an `<img>`:
 
 This is a **style binding**: the same `:` (short for `v-bind`) syntax
 used for `:href` and `:class` elsewhere, except here it sets an inline
-`style` attribute directly from data instead of a plain string. It's a
-deliberate design already baked into the seed data, with a real
-advantage for a student project. There's no dependency on an external
-image API being reachable at grading time, no broken-image icons if a
-URL goes stale, and no upload or storage handling to build. Every album
-always has *something* visually distinct to show, generated instantly
-from two hex codes already sitting in the database.
+`style` attribute directly from data instead of a plain string. The
+gradient matters because an album added through the admin form has no
+artwork, so `cover_url` is null and the `<img>` is skipped by its
+`v-if`. Rather than an empty square, that album gets a coloured tile.
+
+The images themselves use `object-fit: cover`, which crops a non-square
+image to fill the square tile instead of stretching it out of shape.
 
 ## CSS custom properties (variables)
 

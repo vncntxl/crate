@@ -265,6 +265,18 @@ main {
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
+/* Cover artwork sits on top of the card's fallback gradient.
+   object-fit: cover crops a non-square image to fill the square tile
+   instead of squashing it out of shape. */
+.album-card-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .album-card-info {
     position: absolute;
     left: 0;
@@ -368,6 +380,14 @@ main {
     width: 260px;
     height: 260px;
     border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.album-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .album-info .artist {

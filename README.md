@@ -67,9 +67,30 @@ crate/
   api/         JSON endpoints - see docs/ for what each one does
   js/          one Vue app per page
   css/         style.css - the whole site's styling
-  seed/        crate.sql (full schema + seed data)
+  assets/covers/  album artwork (JPEGs)
+  seed/        crate.sql (full schema + seed data), fetch_covers.php
   docs/        write-up of every feature and concept, for the viva
 ```
+
+## Cover art
+
+Album artwork lives in `assets/covers/` as ordinary JPEG files, with
+each path stored in `albums.cover_url`. Those files were fetched once by
+`seed/fetch_covers.php`, which looks each album up in Apple's free
+iTunes Search API and downloads the artwork. **The live site never runs
+that script** and has no dependency on the API. It only reads the image
+files already on disk.
+
+You only need to re-run it if you want to rebuild the album table from
+scratch:
+
+```
+php seed/fetch_covers.php
+```
+
+That command wipes and re-seeds the `albums` table, so it also clears
+existing reviews and favourites through their `ON DELETE CASCADE`
+foreign keys. It refuses to run from a browser.
 
 ## Documentation
 

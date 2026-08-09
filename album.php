@@ -31,7 +31,13 @@ require_once __DIR__ . '/includes/header.php';
         <div
             class="album-hero"
             :style="{ background: 'linear-gradient(135deg, ' + album.cover_color_1 + ', ' + album.cover_color_2 + ')' }"
-        ></div>
+        >
+            <img
+                v-if="album.cover_url"
+                :src="album.cover_url"
+                :alt="album.title + ' album cover'"
+            >
+        </div>
 
         <div class="album-info">
             <div class="detail-title-row">

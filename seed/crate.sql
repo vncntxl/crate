@@ -33,6 +33,7 @@ CREATE TABLE `albums` (
   `track_count` int(11) DEFAULT 0,
   `duration_min` int(11) DEFAULT 0,
   `description` text DEFAULT NULL,
+  `cover_url` varchar(255) DEFAULT NULL,
   `cover_color_1` varchar(20) DEFAULT '#6d5df0',
   `cover_color_2` varchar(20) DEFAULT '#8f7bf5',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -46,7 +47,7 @@ CREATE TABLE `albums` (
 
 LOCK TABLES `albums` WRITE;
 /*!40000 ALTER TABLE `albums` DISABLE KEYS */;
-INSERT INTO `albums` VALUES (1,'Midnight Tape','Aria Vale',2024,'Indie Pop','Lunar Records','K. Mori',11,38,'A hazy, late-night record blending dream-pop guitars with warm analog synths.','#ff6b6b','#ff9f7f','2026-07-19 05:32:16'),(2,'Golden Static','The Wash',2023,'Rock','Fuzzbox','D. Reyes',10,41,'Distorted riffs and driving drums with a nostalgic 90s alt-rock edge.','#4d7dff','#7fb2ff','2026-07-19 05:32:16'),(3,'Paper Moons','Cassette',2022,'Electronic','Nightowl','S. Iyer',9,34,'Soft synth textures and gentle beats built for late-night listening.','#1fbf9f','#5fe0c4','2026-07-19 05:32:16'),(4,'Slow Bloom','June Halo',2024,'Pop','Halo Sound','T. Park',12,44,'Bright, hook-driven pop with layered vocal harmonies.','#ffb020','#ffd27a','2026-07-19 05:32:16'),(5,'Concrete Garden','Nova Bloc',2021,'Hip-Hop','Bloc Records','R. James',14,47,'Boom-bap drums with jazzy samples and sharp, reflective verses.','#8f5bff','#b98bff','2026-07-19 05:32:16'),(6,'Wavelength','Echo Parlour',2020,'Jazz','Blue Salt','M. Abara',8,52,'Improvisational jazz trio recordings with a modern production polish.','#00b3b3','#4fe0e0','2026-07-19 05:32:16'),(7,'Static Bloom','Faye West',2023,'Electronic','Nightowl','S. Iyer',10,39,'Ambient electronica with shimmering pads and slow-building drops.','#ff5c8a','#ff9cb8','2026-07-19 05:32:16'),(8,'Field Recordings','The Low Hills',2019,'Folk','Wren House','A. Doyle',13,49,'Acoustic folk stories recorded live with minimal overdubs.','#7a9e5b','#a8c98a','2026-07-19 05:32:16'),(9,'Neon Aisle','Kilo Youth',2024,'Pop','Halo Sound','T. Park',11,36,'Synth-pop with driving basslines and glossy production.','#ff8f1f','#ffbf6b','2026-07-19 05:32:16'),(10,'Broken Radio','Static Choir',2022,'Rock','Fuzzbox','D. Reyes',9,40,'Raw, guitar-forward rock with layered vocal harmonies.','#4a4ae0','#8686f0','2026-07-19 05:32:16'),(11,'Salt Water','Marin',2021,'Indie Pop','Lunar Records','K. Mori',10,37,'Breezy indie pop inspired by coastal landscapes.','#20b6c4','#6fe0ea','2026-07-19 05:32:16'),(12,'Dust & Light','Nova Bloc',2023,'Hip-Hop','Bloc Records','R. James',12,45,'Sample-driven hip-hop exploring memory and place.','#a05bff','#c99bff','2026-07-19 05:32:16');
+INSERT INTO `albums` VALUES (1,'Rumours','Fleetwood Mac',1977,'Rock','Warner Bros.','Fleetwood Mac, Ken Caillat, Richard Dashut',11,40,'Five band members writing through the collapse of their own relationships, and somehow turning it into the most polished pop-rock record of the decade.','assets/covers/1.jpg','#ff6b6b','#ff9f7f','2026-08-09 12:52:23'),(2,'OK Computer','Radiohead',1997,'Rock','Parlophone','Nigel Godrich, Radiohead',12,53,'Guitar music bent into something colder and stranger, full of dread about technology that only reads as more accurate with time.','assets/covers/2.jpg','#4d7dff','#7fb2ff','2026-08-09 12:52:24'),(3,'Random Access Memories','Daft Punk',2013,'Electronic','Columbia','Daft Punk',14,74,'Two robots hire live session players and disco veterans, then build an album about missing the way records used to sound.','assets/covers/3.jpg','#1fbf9f','#5fe0c4','2026-08-09 12:52:24'),(4,'Discovery','Daft Punk',2001,'Electronic','Virgin','Daft Punk',14,61,'Filtered house built out of chopped-up samples and pure nostalgia, and the record that taught a generation what a French touch drop sounds like.','assets/covers/4.jpg','#8f5bff','#b98bff','2026-08-09 12:52:25'),(5,'To Pimp a Butterfly','Kendrick Lamar',2015,'Hip-Hop','Top Dawg / Aftermath / Interscope','Sounwave, Terrace Martin, Flying Lotus and others',17,79,'Free jazz, funk and spoken word pulled into a dense record about fame, survivor guilt and Black identity in America.','assets/covers/5.jpg','#f2b90a','#ffe07f','2026-08-09 12:52:25'),(6,'good kid, m.A.A.d city','Kendrick Lamar',2012,'Hip-Hop','Top Dawg / Aftermath / Interscope','Dr. Dre, Sounwave, Hit-Boy and others',13,68,'A short film in album form: one day in Compton, told out of order, with the skits doing as much narrative work as the verses.','assets/covers/6.jpg','#ff6b6b','#ff9f7f','2026-08-09 12:52:25'),(7,'Kind of Blue','Miles Davis',1959,'Jazz','Columbia','Irving Townsend, Teo Macero',5,45,'Recorded in two sessions with sketches instead of full charts, letting the band improvise around modes rather than chord changes.','assets/covers/7.jpg','#4d7dff','#7fb2ff','2026-08-09 12:52:26'),(8,'A Love Supreme','John Coltrane',1965,'Jazz','Impulse!','Bob Thiele',4,33,'A four-part suite written as a devotional offering, moving from restless searching into something close to peace.','assets/covers/8.jpg','#1fbf9f','#5fe0c4','2026-08-09 12:52:26'),(9,'Blue','Joni Mitchell',1971,'Folk','Reprise','Henry Lewy',10,36,'Ten songs with almost nothing to hide behind, mostly voice against dulcimer, piano or open-tuned guitar.','assets/covers/9.jpg','#8f5bff','#b98bff','2026-08-09 12:52:27'),(10,'Harvest','Neil Young',1972,'Folk','Reprise','Elliot Mazer, Neil Young, Jack Nitzsche, Henry Lewy',10,37,'Country-leaning songs cut between Nashville, a barn in California and a London orchestra session, and the record that made him far bigger than he wanted to be.','assets/covers/10.jpg','#f2b90a','#ffe07f','2026-08-09 12:52:27'),(11,'Melodrama','Lorde',2017,'Indie Pop','Lava / Republic','Jack Antonoff, Lorde',11,41,'One house party stretched across a whole album, running from the high of the first drink to the walk home alone.','assets/covers/11.jpg','#ff6b6b','#ff9f7f','2026-08-09 12:52:28'),(12,'Modern Vampires of the City','Vampire Weekend',2013,'Indie Pop','XL Recordings','Rostam Batmanglij, Ariel Rechtshaid',12,43,'The band drop the bright preppy guitars for pitch-shifted vocals and organ, and spend the album arguing with the idea of getting older.','assets/covers/12.jpg','#4d7dff','#7fb2ff','2026-08-09 12:52:29'),(13,'Thriller','Michael Jackson',1982,'Pop','Epic','Quincy Jones, Michael Jackson',9,42,'Pop, funk, rock and disco welded together with studio precision, and still the yardstick every big commercial record gets measured against.','assets/covers/13.jpg','#1fbf9f','#5fe0c4','2026-08-09 12:52:29'),(14,'1989','Taylor Swift',2014,'Pop','Big Machine','Max Martin, Shellback, Jack Antonoff, Taylor Swift',14,49,'A full move from country into synth-pop, built on 80s drum sounds and hooks aimed squarely at radio.','assets/covers/14.jpg','#8f5bff','#b98bff','2026-08-09 12:52:30');
 /*!40000 ALTER TABLE `albums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +68,7 @@ CREATE TABLE `collection` (
   KEY `album_id` (`album_id`),
   CONSTRAINT `collection_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `collection_ibfk_2` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +77,7 @@ CREATE TABLE `collection` (
 
 LOCK TABLES `collection` WRITE;
 /*!40000 ALTER TABLE `collection` DISABLE KEYS */;
-INSERT INTO `collection` VALUES (1,2,2,'2026-07-19 05:37:17');
+INSERT INTO `collection` VALUES (5,2,3,'2026-08-09 12:53:33'),(6,2,7,'2026-08-09 12:53:33');
 /*!40000 ALTER TABLE `collection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +101,7 @@ CREATE TABLE `reviews` (
   CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE,
   CONSTRAINT `chk_rating` CHECK (`rating` between 1 and 5)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +110,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,1,1,5,'Gorgeous production, track 6 is on repeat.','2026-07-19 05:32:16'),(2,1,2,4,'Great energy, slightly long.','2026-07-19 05:32:16'),(3,1,3,3,'Nice ideas, uneven tracklist.','2026-07-19 05:32:16'),(4,2,2,5,'I LOVE THIS!!','2026-07-19 05:37:26');
+INSERT INTO `reviews` VALUES (8,1,1,5,'Every song earns its place. The fact they made this while falling apart is unbelievable.','2026-08-09 12:53:33'),(9,2,1,4,'Dreams and The Chain are perfect. Loses me slightly in the back half.','2026-08-09 12:53:33'),(10,1,3,5,'Giorgio by Moroder alone is worth it. Sounds enormous on good speakers.','2026-08-09 12:53:33'),(11,2,5,5,'Dense and difficult and worth every replay. Not background music.','2026-08-09 12:53:33'),(12,1,7,5,'Puts me in a completely different mood within about ten seconds.','2026-08-09 12:53:33'),(13,2,11,4,'Captures being young and wrecked at a party better than anything else.','2026-08-09 12:53:33'),(14,1,13,4,'The production still sounds current forty years on.','2026-08-09 12:53:33');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-08-09 20:34:02
+-- Dump completed on 2026-08-09 22:55:06

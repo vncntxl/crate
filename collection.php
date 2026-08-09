@@ -27,6 +27,13 @@ require_once __DIR__ . '/includes/header.php';
             class="album-card"
             :style="{ background: 'linear-gradient(135deg, ' + album.cover_color_1 + ', ' + album.cover_color_2 + ')' }"
         >
+            <img
+                v-if="album.cover_url"
+                :src="album.cover_url"
+                :alt="album.title + ' album cover'"
+                class="album-card-art"
+            >
+
             <button
                 type="button"
                 class="heart-btn favourited"

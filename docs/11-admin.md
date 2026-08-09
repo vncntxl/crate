@@ -40,18 +40,23 @@ and `POST` directly to the endpoint with curl. See
 [05-security-concepts.md](05-security-concepts.md), point 8, for the
 general principle.
 
-## Placeholder cover art
+## Cover art for admin-added albums
 
-Albums don't have real cover images in this project. Each one gets a
-two-colour CSS gradient instead (`cover_color_1`/`cover_color_2`, used
-throughout via `:style="{ background: 'linear-gradient(...)' }"`). New
-albums get a random pair from a small fixed palette so they look
-consistent with the seeded demo data:
+The seeded albums have real cover images, downloaded once by
+`seed/fetch_covers.php` (see [12-styling.md](12-styling.md)). An album
+added through this admin form has no artwork, so its `cover_url` stays
+null and the `<img>` on the card is skipped by its `v-if`.
+
+To make sure a new album still looks like something rather than an empty
+square, `api/album_add.php` assigns it a random gradient from a small
+fixed palette:
 
 ```php
 $palette = [['#ff6b6b', '#ff9f7f'], ['#4d7dff', '#7fb2ff'], ...];
 $colors = $palette[array_rand($palette)];
 ```
 
-See [12-styling.md](12-styling.md) for why this project uses gradients
-instead of uploaded images.
+Handling real image uploads would mean file validation, storage limits
+and a whole class of security problems (someone uploading a PHP script
+disguised as a `.jpg`), which is well outside what this assignment
+needs. The gradient is the deliberate trade-off.
