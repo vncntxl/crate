@@ -4,7 +4,7 @@ A music album review web app built for **INT1059 Advanced Web** (Assessment 3).
 Browse albums, search and filter by genre, leave star-rated reviews,
 save favourites, and manage your own account.
 
-**Live site:** _add your hosted URL here once deployed_
+**Live site:** http://cratemusicapp.ct.ws
 **Repository:** https://github.com/vncntxl/crate
 
 ## Tech stack
