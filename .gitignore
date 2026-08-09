@@ -6,3 +6,6 @@ Thumbs.db
 
 # Written report - contains student ID and name, kept out of the public repo
 report/
+
+# Live server database credentials - must never be committed
+includes/config.local.php
