@@ -19,6 +19,7 @@ createApp({
             searchTerm: '',   // whatever the user has typed in the search box
             activeGenre: '',  // the currently selected genre chip ('' = none)
             loading: true,    // true while a fetch() is in flight
+            favouriteIds: [], // album ids the logged-in user has hearted
         };
     },
 
@@ -35,6 +36,7 @@ createApp({
 
         this.loadGenres();
         this.loadAlbums();
+        this.loadFavourites();
     },
 
     methods: {
@@ -84,6 +86,43 @@ createApp({
             this.activeGenre = genre;
             this.searchTerm = '';
             this.loadAlbums();
+        },
+
+        // Loads the ids of every album the logged-in user has favourited,
+        // so the heart buttons in the grid know which ones to fill in.
+        // If nobody is logged in, api/favourites.php replies 401 and we
+        // just leave the list empty (the hearts aren't even shown then -
+        // see the v-if on the heart button in index.php).
+        async loadFavourites() {
+            const response = await fetch('api/favourites.php');
+            if (!response.ok) {
+                this.favouriteIds = [];
+                return;
+            }
+            const albums = await response.json();
+            this.favouriteIds = albums.map((album) => album.id);
+        },
+
+        // Runs when a heart button is clicked. Posts to the toggle
+        // endpoint, then updates our local favouriteIds list to match
+        // whatever the server says actually happened - this is what
+        // makes the heart fill in or empty out immediately.
+        async toggleFavourite(albumId) {
+            const body = new URLSearchParams();
+            body.set('album_id', albumId);
+
+            const response = await fetch('api/favourite_toggle.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body.toString(),
+            });
+            const data = await response.json();
+
+            if (data.favourited) {
+                this.favouriteIds.push(albumId);
+            } else {
+                this.favouriteIds = this.favouriteIds.filter((id) => id !== albumId);
+            }
         },
     },
 }).mount('#app');

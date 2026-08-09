@@ -66,6 +66,8 @@ createApp({
             myReviewText: '',
             reviewError: '',
             submitting: false,
+
+            isFavourited: false,
         };
     },
 
@@ -100,7 +102,26 @@ createApp({
                 this.myReviewText = '';
             }
 
+            this.isFavourited = data.is_favourited ?? false;
+
             this.loading = false;
+        },
+
+        // Posts to the same toggle endpoint the home page uses. The
+        // server is the source of truth for whether this album ended up
+        // favourited or not - we just mirror whatever it reports back.
+        async toggleFavourite() {
+            const body = new URLSearchParams();
+            body.set('album_id', this.albumId);
+
+            const response = await fetch('api/favourite_toggle.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body.toString(),
+            });
+            const data = await response.json();
+
+            this.isFavourited = data.favourited ?? this.isFavourited;
         },
 
         // Sends the star-picker's value and the textarea's text to

@@ -34,7 +34,19 @@ require_once __DIR__ . '/includes/header.php';
         ></div>
 
         <div class="album-info">
-            <h1>{{ album.title }}</h1>
+            <div class="detail-title-row">
+                <h1>{{ album.title }}</h1>
+
+                <?php if ($loggedInUser): ?>
+                    <button
+                        type="button"
+                        class="heart-btn detail-heart"
+                        :class="{ favourited: isFavourited }"
+                        @click="toggleFavourite"
+                    >♥ {{ isFavourited ? 'Favourited' : 'Add to favourites' }}</button>
+                <?php endif; ?>
+            </div>
+
             <p class="artist">{{ album.artist }} &middot; {{ album.year }} &middot; {{ album.genre }}</p>
 
             <div class="rating-line">

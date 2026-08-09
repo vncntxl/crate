@@ -53,12 +53,19 @@ try {
     // already reviewed this album (and what they said), so album.php can
     // show "edit your review" instead of a second, duplicate review form.
     $myReview = null;
+    $isFavourited = false;
     if (is_logged_in()) {
         $myReviewStmt = db()->prepare(
             'SELECT id, rating, review_text FROM reviews WHERE album_id = :album_id AND user_id = :user_id'
         );
         $myReviewStmt->execute(['album_id' => $id, 'user_id' => $_SESSION['user_id']]);
         $myReview = $myReviewStmt->fetch() ?: null;
+
+        $favStmt = db()->prepare(
+            'SELECT id FROM collection WHERE album_id = :album_id AND user_id = :user_id'
+        );
+        $favStmt->execute(['album_id' => $id, 'user_id' => $_SESSION['user_id']]);
+        $isFavourited = (bool) $favStmt->fetch();
     }
 
     echo json_encode([
@@ -67,6 +74,7 @@ try {
         'average_rating' => $stats['average_rating'] !== null ? round((float) $stats['average_rating'], 1) : null,
         'review_count'   => (int) $stats['review_count'],
         'my_review'      => $myReview,
+        'is_favourited'  => $isFavourited,
     ]);
 
 } catch (PDOException $err) {

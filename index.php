@@ -45,6 +45,21 @@ require_once __DIR__ . '/includes/header.php';
             class="album-card"
             :style="{ background: 'linear-gradient(135deg, ' + album.cover_color_1 + ', ' + album.cover_color_2 + ')' }"
         >
+            <!--
+                PHP already knows on the server whether you're logged in,
+                so it writes the literal word "true" or "false" straight
+                into this v-if - Vue doesn't need to work that out itself.
+                @click.stop.prevent stops the click from also triggering
+                the <a>'s normal "go to the album" navigation.
+            -->
+            <button
+                v-if="<?= $loggedInUser ? 'true' : 'false' ?>"
+                type="button"
+                class="heart-btn"
+                :class="{ favourited: favouriteIds.includes(album.id) }"
+                @click.stop.prevent="toggleFavourite(album.id)"
+            >♥</button>
+
             <div class="album-card-info">
                 <strong>{{ album.title }}</strong>
                 <span>{{ album.artist }}</span>
