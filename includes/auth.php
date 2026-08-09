@@ -70,6 +70,22 @@ function require_admin(): void
     }
 }
 
+// Builds a URL for a CSS or JS file with a version number on the end,
+// e.g. "js/app.js?v=1754812345".
+//
+// Browsers cache .css and .js files hard, which is normally what you want
+// but means an updated file can keep serving the old version after a
+// deploy. filemtime() is the file's last-modified time, so the moment we
+// edit the file the URL changes and the browser is forced to fetch the
+// new copy. Nothing else about the file changes.
+function asset(string $path): string
+{
+    $fullPath = __DIR__ . '/../' . $path;
+    $version = file_exists($fullPath) ? filemtime($fullPath) : '1';
+
+    return $path . '?v=' . $version;
+}
+
 // Short for "escape". Wraps htmlspecialchars() so that whenever we print
 // something a user typed (a name, an email, review text) back into HTML,
 // the browser displays it as plain text instead of running it as HTML/JS.

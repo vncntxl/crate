@@ -106,6 +106,6 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="js/account.js"></script>
+<script src="<?= asset('js/account.js') ?>"></script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

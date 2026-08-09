@@ -44,6 +44,27 @@ artwork, so `cover_url` is null and the `<img>` is skipped by its
 The images themselves use `object-fit: cover`, which crops a non-square
 image to fill the square tile instead of stretching it out of shape.
 
+## Cache busting on CSS and JS
+
+Browsers cache `.css` and `.js` files aggressively. That is normally
+what you want, but it means an updated file can keep serving the old
+version after a deploy, which is genuinely confusing to debug: the HTML
+changes but the JavaScript driving it does not.
+
+The `asset()` helper in `includes/auth.php` puts the file's
+last-modified time on the end of its URL:
+
+```php
+<script src="<?= asset('js/app.js') ?>"></script>
+<!-- renders as: js/app.js?v=1786280407 -->
+```
+
+Edit the file and `filemtime()` changes, so the URL changes, so the
+browser treats it as a new file and fetches it. Leave the file alone and
+the URL stays stable and stays cached. This happened for real during
+development: the browser kept running an old `app.js` against new HTML,
+and the page silently ignored a newly added button.
+
 ## CSS custom properties (variables)
 
 ```css

@@ -49,6 +49,6 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="js/collection.js"></script>
+<script src="<?= asset('js/collection.js') ?>"></script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
