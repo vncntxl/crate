@@ -10,13 +10,13 @@ save favourites, and manage your own account.
 ## Tech stack
 
 - HTML, CSS
-- Vue.js 3 (loaded via CDN — no build step, no npm)
-- PHP (procedural, PDO for database access)
+- Vue.js 3, loaded via CDN. No build step, no npm.
+- PHP, procedural style, PDO for database access
 - MySQL / MariaDB
 
-No frameworks, bundlers, or package managers — everything here is a tool
-covered directly in the unit (Modules 9–11). See
-[docs/01-big-picture.md](docs/01-big-picture.md) for why.
+No frameworks, bundlers, or package managers. Every tool here is covered
+directly in the unit (Modules 9-11) - see
+[docs/01-big-picture.md](docs/01-big-picture.md) for why that matters.
 
 ## Features
 
@@ -24,22 +24,22 @@ covered directly in the unit (Modules 9–11). See
 - Search by title or artist, and filter by genre (nav dropdown + chips)
 - Album detail page: synopsis, metadata, average star rating, reviews
 - User registration and login (hashed passwords, sessions)
-- Star-rating review system — submit, edit, and delete your own reviews
-- Favourites: add/remove from any album card or the detail page, manage
-  them on a dedicated page
-- Account page: update your name/email, change your password, manage
-  your own reviews
-- Admin-only page to add new albums (with server-side validation)
+- Star-rating review system: submit, edit, and delete your own reviews
+- Favourites: add or remove from any album card or the detail page,
+  manage them on a dedicated page
+- Account page: update your name and email, change your password,
+  manage your own reviews
+- Admin-only page to add new albums, with server-side validation
 
 ## Setup (local, with XAMPP)
 
 1. Copy this project into your XAMPP `htdocs` folder, e.g.
    `C:\xampp\htdocs\crate`.
 2. Start **Apache** and **MySQL** in the XAMPP Control Panel.
-3. Create the database and import the schema + seed data:
+3. Create the database and import the schema and seed data:
    - Open phpMyAdmin (`http://localhost/phpmyadmin`).
    - Create a new database named `crate`.
-   - Import [seed/crate.sql](seed/crate.sql) into it (Import tab → choose file → Go).
+   - Import [seed/crate.sql](seed/crate.sql) into it (Import tab, choose file, Go).
 4. Check [includes/config.php](includes/config.php) matches your MySQL
    setup. The defaults (`root` user, no password, host `localhost`) work
    for a stock XAMPP install with nothing changed.
@@ -47,10 +47,9 @@ covered directly in the unit (Modules 9–11). See
 
 ### Seed accounts
 
-The imported data includes two demo users (see `users` table) with
-existing reviews and a favourite already attached. If you'd rather
-register your own account and test as an admin, register normally, then
-promote yourself with:
+The imported data includes two demo users (see the `users` table), each
+with existing reviews and one favourite already attached. To test as an
+admin instead, register your own account, then promote it:
 
 ```sql
 UPDATE users SET is_admin = 1 WHERE email = 'you@example.com';
@@ -69,30 +68,29 @@ crate/
   js/          one Vue app per page
   css/         style.css - the whole site's styling
   seed/        crate.sql (full schema + seed data)
-  docs/        beginner-friendly write-up of every feature and concept
+  docs/        write-up of every feature and concept, for the viva
 ```
 
 ## Documentation
 
-[docs/README.md](docs/README.md) is a full, plain-language walkthrough
-of the entire codebase — architecture, how Vue and PHP talk to each
-other, every security concept used (prepared statements, password
-hashing, sessions, ownership checks), and a file-by-file explanation of
-every feature.
+[docs/README.md](docs/README.md) walks through the entire codebase: the
+architecture, how Vue and PHP talk to each other, every security concept
+in use (prepared statements, password hashing, sessions, ownership
+checks), and a file-by-file explanation of each feature.
 
 ## Database
 
-`seed/crate.sql` is a full export (schema + data) of the `crate`
-database, produced with `mysqldump`. It includes four tables: `users`,
-`albums`, `reviews`, `collection` (the favourites table — see
-[docs/09-favourites.md](docs/09-favourites.md) for why the table name
-and the feature name differ).
+`seed/crate.sql` is a full export (schema and data) of the `crate`
+database, produced with `mysqldump`. It has four tables: `users`,
+`albums`, `reviews`, and `collection`, which is the favourites table -
+see [docs/09-favourites.md](docs/09-favourites.md) for why the table
+name and the feature name differ.
 
 ## Deployment
 
-This app is plain PHP + MySQL with no build step, so it will run on any
-standard PHP hosting that provides MySQL/MariaDB (shared hosting,
-InfinityFree, 000webhost, etc.). To deploy:
+This app is plain PHP and MySQL with no build step, so it runs on any
+standard PHP host that provides MySQL/MariaDB (shared hosting,
+InfinityFree, 000webhost, and similar). To deploy:
 
 1. Upload all files to the host.
 2. Create a MySQL database on the host and import `seed/crate.sql`.

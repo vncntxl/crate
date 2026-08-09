@@ -19,30 +19,30 @@ if (!$user || !$user['is_admin']) {   // 2. server-side API gate
 ```
 
 These are separate checks in separate files, not one check reused
-everywhere - because `admin.php` and `api/album_add.php` can be reached
-independently (someone could, in principle, `POST` straight to the API
-without ever loading the admin page). Neither one trusts the other; each
-protects itself. The "Admin" link only appearing in the nav for admin
-users (`includes/header.php`) is a third layer, but it's the *weakest*
-one - it's just hiding a link, easily bypassed by typing the URL
-directly, which is exactly why the two real checks above exist. See
+everywhere, because `admin.php` and `api/album_add.php` can be reached
+independently. Someone could, in principle, `POST` straight to the API
+without ever loading the admin page. Neither check trusts the other;
+each protects itself. The "Admin" link only appearing in the nav for
+admin users (`includes/header.php`) is a third layer, but it's the
+*weakest* one. It's just hiding a link, easily bypassed by typing the
+URL directly, which is exactly why the two real checks above exist. See
 [05-security-concepts.md](05-security-concepts.md), point 7.
 
 ## Client-side validation, and why it isn't enough on its own
 
-`js/admin.js` has a `validate()` method that checks title/artist/genre
-aren't blank and the year is sensible, purely so a user gets instant
-feedback without waiting on a network round trip. `api/album_add.php`
-then checks every one of those same rules again from scratch, because
-the JavaScript check runs entirely inside the visitor's own browser -
-anyone can disable it, edit it, or skip the form entirely and `POST`
-directly to the endpoint with curl. See
+`js/admin.js` has a `validate()` method that checks title, artist, and
+genre aren't blank and the year is sensible, purely so a user gets
+instant feedback without waiting on a network round trip.
+`api/album_add.php` then checks every one of those same rules again from
+scratch, because the JavaScript check runs entirely inside the visitor's
+own browser. Anyone can disable it, edit it, or skip the form entirely
+and `POST` directly to the endpoint with curl. See
 [05-security-concepts.md](05-security-concepts.md), point 8, for the
 general principle.
 
 ## Placeholder cover art
 
-Albums don't have real cover images in this project - each one gets a
+Albums don't have real cover images in this project. Each one gets a
 two-colour CSS gradient instead (`cover_color_1`/`cover_color_2`, used
 throughout via `:style="{ background: 'linear-gradient(...)' }"`). New
 albums get a random pair from a small fixed palette so they look

@@ -11,47 +11,46 @@ the unit actually teaches: HTML, CSS, PHP, MySQL, and Vue 3.
 
 **PHP returns JSON. Vue renders it.**
 
-Think of it like a restaurant:
+Think of it like a restaurant.
 
-- **MySQL** is the pantry — it just stores ingredients (rows of data).
+- **MySQL** is the pantry. It just stores ingredients: rows of data.
 - **PHP files in `api/`** are the kitchen and the waiter combined. They
   fetch the right ingredients from the pantry (a SQL query), plate them
-  up in a standard format (JSON — just plain text that looks like
-  `{"title": "Golden Static", "year": 2023}`), and hand the plate to your
-  table. They never decorate the table or hand you a menu written in
-  HTML — they only ever hand over the food itself, as data.
+  up in a standard format (JSON, plain text that looks like
+  `{"title": "Golden Static", "year": 2023}`), and hand the plate to
+  your table. They never decorate the table or hand you a menu written
+  in HTML. They only hand over the food itself, as data.
 - **Vue**, running in your browser, is you at the table. It looks at
   what's on the plate (the JSON) and decides how to arrange it on the
-  page — a grid of album cards, a row of stars, a list of reviews. If you
-  ask for something different (type in the search box), Vue asks the
-  kitchen again and re-arranges the table without you needing to get up
-  and sit at a new table (no page reload).
+  page: a grid of album cards, a row of stars, a list of reviews. Ask
+  for something different (type in the search box) and Vue asks the
+  kitchen again, then re-arranges the table without you getting up and
+  sitting at a new one. That's the "no page reload" part.
 - **Page files** like `index.php` and `album.php` are just the empty
-  table itself — a `<div id="app">` — plus a page title and the shared
-  nav bar. They do almost no work themselves.
+  table itself, a `<div id="app">` plus a page title and the shared nav
+  bar. They do almost no work themselves.
 
-This split matters for the viva: if someone asks "why is this a good
-design?", the answer is that the **back end (PHP/MySQL) and front end
-(Vue) don't need to know much about each other**. PHP doesn't care how
-the JSON gets displayed, and Vue doesn't care how the JSON was produced.
-You could swap out Vue for a totally different front end and the `api/`
-files wouldn't need to change at all.
+This split matters for the viva. If someone asks why this is a good
+design, the answer is that the back end (PHP/MySQL) and front end (Vue)
+don't need to know much about each other. PHP doesn't care how the JSON
+gets displayed, and Vue doesn't care how the JSON was produced. Swap out
+Vue for a completely different front end and the `api/` files wouldn't
+need to change at all.
 
 ## Two exceptions, and why
 
-**Login, register, and logout are NOT done through `fetch()`/JSON.**
-They're plain, old-fashioned HTML `<form method="post">` pages. This is
-deliberate: authentication only needs to happen once per action (submit
-the form, get redirected), there's no benefit to making it "reactive",
-and keeping it as a simple, linear PHP script makes the
-security-critical code (checking passwords, starting sessions) easier to
-read top-to-bottom — nothing is hidden behind an asynchronous JavaScript
-call.
+**Login, register, and logout don't go through `fetch()`/JSON.** They're
+plain, old-fashioned HTML `<form method="post">` pages. Authentication
+only needs to happen once per action: submit the form, get redirected.
+There's no benefit to making it "reactive," and a simple, linear PHP
+script keeps the security-critical code (checking passwords, starting
+sessions) readable top-to-bottom, with nothing hidden behind an
+asynchronous JavaScript call.
 
 **The genre dropdown in the nav bar is rendered by PHP, not Vue.** It
-only needs to read the list of genres once, when the page first loads —
-that's a job the server can do directly (see `includes/header.php`)
-without needing any JavaScript at all.
+only needs to read the list of genres once, when the page first loads.
+That's a job the server can do directly (see `includes/header.php`)
+without any JavaScript at all.
 
 ## Folder structure
 
@@ -70,8 +69,9 @@ crate/
     app.js, album.js, account.js, ...                   <- one Vue app per page
   css/
     style.css                                            <- the whole site's styling
-  seed/            <- one-off scripts used to set up demo data
-  assets/covers/    <- (currently unused - see docs/12-styling.md)
+  seed/
+    crate.sql                                            <- full schema + seed data export
+  assets/covers/    <- unused, see docs/12-styling.md for why
 ```
 
 Every page follows the same three-line skeleton:
@@ -89,7 +89,8 @@ require_once __DIR__ . '/includes/footer.php';  // print the shared bottom half
 ## Why this stack and nothing else
 
 No Laravel, no React, no npm, no build step, no Composer. That's not a
-limitation we worked around — it's the actual assignment constraint: the
-unit's modules only cover procedural PHP + PDO (Module 10) and Vue 3
-(Modules 9 and 11). Every tool used here is one you can point to in the
-subject outline, which means every choice is defensible in the viva.
+limitation to work around. It's the actual assignment constraint: the
+unit's modules only cover procedural PHP with PDO (Module 10) and Vue 3
+(Modules 9 and 11). Every tool used here can be pointed to directly in
+the subject outline, which is what makes every choice defensible in the
+viva.
