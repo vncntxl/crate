@@ -249,3 +249,51 @@ main {
     color: #cfcfe0;
     margin: 0;
 }
+
+/* Auth forms (register / login / account) */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 360px;
+}
+
+.auth-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: #cfcfe0;
+}
+
+.auth-form input {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #2a2a38;
+    background: #1b1b26;
+    color: #f0f0f5;
+    font-size: 1rem;
+}
+
+.auth-form button {
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: none;
+    background: #6d5df0;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    background: #7f6ff5;
+}
+
+.form-errors {
+    background: #3a1f28;
+    border: 1px solid #6b2f3f;
+    color: #ffb4c2;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    max-width: 360px;
+}
