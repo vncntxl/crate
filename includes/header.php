@@ -7,8 +7,15 @@
 // change it here once instead of in every page.
 
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/db.php';
 
 $loggedInUser = current_user();
+
+// The genre dropdown is plain PHP + a database query, not Vue. It appears
+// on every page (it lives in this shared header), and it only needs to
+// read data once when the page loads - that's a job for the server, not
+// for client-side JavaScript.
+$navGenres = db()->query('SELECT DISTINCT genre FROM albums ORDER BY genre')->fetchAll(PDO::FETCH_COLUMN);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +35,9 @@ $loggedInUser = current_user();
         <div class="dropdown">
             <button type="button" class="dropdown-toggle">Genres</button>
             <div class="dropdown-menu" id="genre-dropdown">
-                <!-- Vue fills this in with real genres once the page loads -->
+                <?php foreach ($navGenres as $navGenre): ?>
+                    <a href="index.php?genre=<?= urlencode($navGenre) ?>"><?= e($navGenre) ?></a>
+                <?php endforeach; ?>
             </div>
         </div>
 

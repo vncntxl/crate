@@ -1,0 +1,59 @@
+<?php
+// Crate - home page
+// This file is deliberately "thin": it does almost no work itself. It just
+// sets a page title, includes the shared header/footer, and drops in the
+// one <div id="app"> that Vue will take over. All the real logic - loading
+// albums, searching, filtering - lives in js/app.js.
+
+require_once __DIR__ . '/includes/header.php';
+?>
+
+<div id="app">
+    <h1>Browse Albums</h1>
+
+    <div class="controls">
+        <input
+            type="text"
+            v-model="searchTerm"
+            @input="onSearchInput"
+            placeholder="Search by title or artist..."
+        >
+
+        <div class="genre-chips">
+            <button
+                v-for="genre in genres"
+                :key="genre"
+                type="button"
+                :class="{ active: genre === activeGenre }"
+                @click="filterByGenre(genre)"
+            >{{ genre }}</button>
+
+            <button v-if="activeGenre" type="button" @click="filterByGenre('')">
+                Clear filter
+            </button>
+        </div>
+    </div>
+
+    <p v-if="loading">Loading albums...</p>
+    <p v-else-if="albums.length === 0">No albums found.</p>
+
+    <div v-else class="album-grid">
+        <a
+            v-for="album in albums"
+            :key="album.id"
+            :href="'album.php?id=' + album.id"
+            class="album-card"
+            :style="{ background: 'linear-gradient(135deg, ' + album.cover_color_1 + ', ' + album.cover_color_2 + ')' }"
+        >
+            <div class="album-card-info">
+                <strong>{{ album.title }}</strong>
+                <span>{{ album.artist }}</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="js/app.js"></script>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
